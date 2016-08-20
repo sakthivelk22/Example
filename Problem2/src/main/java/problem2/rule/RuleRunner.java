@@ -31,7 +31,8 @@ public class RuleRunner implements Runnable  {
 				JSONParser parser = new JSONParser();
 				JSONObject jsonObject = (JSONObject) parser.parse(line);
 				ruleobj obj = new ruleobj((String) jsonObject.get("name"),(String) jsonObject.get("symbol")
-								,(String) jsonObject.get("value"),(String) jsonObject.get("handler"));
+								,(String) jsonObject.get("value"),(String) jsonObject.get("handler"),
+								(String)jsonObject.get("id"));
 				a_map.put(key, obj);
 				key++;
 			}
@@ -55,6 +56,7 @@ public class RuleRunner implements Runnable  {
 		while (i.hasNext())
 		{
 			entry = i.next();
+			//System.out.println(message);
 			new Thread(new RuleValidator(entry,message)).start();
 		}
 			

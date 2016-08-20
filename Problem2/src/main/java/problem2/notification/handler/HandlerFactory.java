@@ -24,8 +24,15 @@ public class HandlerFactory implements Runnable {
 			jsonObject = (JSONObject) parser.parse(Message);
 		
 			jsonObject.put("alert", rule.toString());
-			System.out.println(jsonObject.toJSONString());
 			// Pass the JSON message to Handlers as necessary //
+			switch(rule.getHandlerName())
+			{
+				case "Handler1":
+					System.out.println(jsonObject.toJSONString());
+					Handle1 handle = new Handle1(jsonObject.toJSONString());
+					handle.generateNotificationMessage();
+					break;				
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

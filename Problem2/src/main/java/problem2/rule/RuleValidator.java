@@ -4,16 +4,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import problem2.notification.handler.HandlerFactory;
-import problem2.util.ruleobj;
+import problem2.util.*;
 
 public class RuleValidator implements Runnable {
 	Map.Entry<Integer, ruleobj> entry;
@@ -25,7 +21,6 @@ public class RuleValidator implements Runnable {
 		this.message=message;
 	}
 
-	@SuppressWarnings("restriction")
 	public void run()
 	{
 		JSONParser parser = new JSONParser();
@@ -38,19 +33,15 @@ public class RuleValidator implements Runnable {
 			Iterator<String> i = Keys.iterator();
 			while (i.hasNext())
 			{
-				@SuppressWarnings("restriction")
-				ScriptEngineManager mgr = new ScriptEngineManager();
-			    @SuppressWarnings("restriction")
-				ScriptEngine engine = mgr.getEngineByName("JavaScript");
 			    
 			    ruleobj obj = entry.getValue();
 			    String name= i.next();
 			    if (obj.getName().equals(name))
 			    {
-			    	String evals= jsonObject.get(name)+obj.getSymbol()+obj.getValue();
-			    	if ((Boolean) engine.eval(evals))
+			    	if (Utility.validator(jsonObject.get(name).toString(),obj.getSymbol(),obj.getValue()))
 			    	{
 			    		//Start new thread for Notification
+			    		//System.out.println("Its true");
 			    		new Thread(new HandlerFactory(message,obj)).start();
 			    	}
 			    }
@@ -58,11 +49,7 @@ public class RuleValidator implements Runnable {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
-	
 	
 }
