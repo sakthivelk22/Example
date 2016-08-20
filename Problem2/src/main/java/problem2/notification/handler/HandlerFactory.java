@@ -28,10 +28,12 @@ public class HandlerFactory implements Runnable {
 			switch(rule.getHandlerName())
 			{
 				case "Handler1":
-					System.out.println(jsonObject.toJSONString());
+					//System.out.println(jsonObject.toJSONString());
 					Handle1 handle = new Handle1(jsonObject.toJSONString());
 					handle.generateNotificationMessage();
-					break;				
+					break;			
+				default: 
+					System.out.println(jsonObject.toJSONString());
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

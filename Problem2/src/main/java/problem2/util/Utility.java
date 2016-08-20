@@ -1,10 +1,7 @@
 package problem2.util;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Utility {
-	static public boolean validator(String lhs,String validate,String rhs)
+	public static boolean validator(String lhs,String validate,String rhs)
 	{
 		try{
 		     switch (validate) {
@@ -41,5 +38,5 @@ public class Utility {
 			return false;
 		}
 	}
-
+	
 }

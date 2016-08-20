@@ -56,10 +56,7 @@ public class RuleRunner implements Runnable  {
 		while (i.hasNext())
 		{
 			entry = i.next();
-			//System.out.println(message);
 			new Thread(new RuleValidator(entry,message)).start();
 		}
-			
 	}
-		
 }
