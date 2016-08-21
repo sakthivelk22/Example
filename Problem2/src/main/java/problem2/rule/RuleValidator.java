@@ -3,7 +3,6 @@ package problem2.rule;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -121,13 +120,17 @@ public class RuleValidator implements Runnable {
 					if ((currentEpoch-Long.parseLong(jsonObject2.get("time").toString()))<Integer.parseInt(m1.group(3)))
 					{
 						JSONObject jsonObjec3 = new JSONObject();
+						int counter = Integer.parseInt(jsonObject2.get("count").toString())+1;
 						jsonObjec3.put("time", Long.parseLong(jsonObject2.get("time").toString()));
-						jsonObjec3.put("count", Integer.parseInt(jsonObject2.get("count").toString())+1);
+						jsonObjec3.put("count", counter);
 						operateP1Matchfile(jsonObjec3.toJSONString(),0);
+						if (counter > Integer.parseInt(m1.group(2)))
+						{
+							new Thread(new HandlerFactory(message,obj)).start();
+						}
 					}
 					else
 					{
-			    		new Thread(new HandlerFactory(message,obj)).start();
 						JSONObject jsonObjec4 = new JSONObject();
 						jsonObjec4.put("time", System.currentTimeMillis());
 						jsonObjec4.put("count", 0);
